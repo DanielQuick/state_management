@@ -1,25 +1,28 @@
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:state_management/state_management/base_controller.dart';
+import 'package:state_management/state_management/base_controller_with_ticker.dart';
 
-class BaseView<T extends BaseController> extends StatefulWidget {
+class BaseViewWithTicker<T extends BaseControllerWithTicker>
+    extends StatefulWidget {
   final Widget Function(BuildContext context, T model, Widget? child) builder;
-  final T Function(BuildContext) controllerBuilder;
-  BaseView({
+  final T Function(BuildContext, TickerProvider) controllerBuilder;
+  const BaseViewWithTicker({
+    Key? key,
     required this.builder,
     required this.controllerBuilder,
-  });
+  }) : super(key: key);
 
   @override
-  _BaseViewState<T> createState() => _BaseViewState<T>();
+  _BaseViewWithTickerState<T> createState() => _BaseViewWithTickerState<T>();
 }
 
-class _BaseViewState<T extends BaseController> extends State<BaseView<T>> {
+class _BaseViewWithTickerState<T extends BaseControllerWithTicker>
+    extends State<BaseViewWithTicker<T>> with SingleTickerProviderStateMixin {
   late T controller;
 
   @override
   void initState() {
-    controller = widget.controllerBuilder(context);
+    controller = widget.controllerBuilder(context, this);
 
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       controller.onCreate();
@@ -37,7 +40,7 @@ class _BaseViewState<T extends BaseController> extends State<BaseView<T>> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<T>(
+    return ChangeNotifierProvider<T?>(
       create: (context) => controller,
       child: Consumer<T>(
         builder: widget.builder,

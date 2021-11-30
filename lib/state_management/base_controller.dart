@@ -1,7 +1,9 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class BaseController extends ChangeNotifier {
-  late BuildContext context;
+  final BuildContext context;
+
+  BaseController(this.context);
 
   onCreate() {}
   onDispose() {}

@@ -23,19 +23,7 @@ class _BaseViewWithTickerState<T extends BaseControllerWithTicker>
   @override
   void initState() {
     controller = widget.controllerBuilder(context, this);
-
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-      controller.onCreate();
-    });
-
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    controller.onDispose();
-
-    super.dispose();
   }
 
   @override

@@ -20,19 +20,7 @@ class _BaseViewState<T extends BaseController> extends State<BaseView<T>> {
   @override
   void initState() {
     controller = widget.controllerBuilder(context);
-
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-      controller.onCreate();
-    });
-
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    controller.onDispose();
-
-    super.dispose();
   }
 
   @override

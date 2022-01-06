@@ -8,4 +8,10 @@ class BaseChangeNotifierProvider with ChangeNotifier {
     disposed = true;
     super.dispose();
   }
+
+  @override
+  void notifyListeners() {
+    if (disposed) return;
+    super.notifyListeners();
+  }
 }

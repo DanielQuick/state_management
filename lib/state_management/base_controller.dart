@@ -12,4 +12,10 @@ class BaseController extends ChangeNotifier {
     disposed = true;
     super.dispose();
   }
+
+  @override
+  void notifyListeners() {
+    if (disposed) return;
+    super.notifyListeners();
+  }
 }

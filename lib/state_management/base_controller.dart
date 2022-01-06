@@ -14,6 +14,20 @@ class BaseController extends ChangeNotifier {
   }
 
   @override
+  addListener(VoidCallback listener) {
+    if (disposed) return;
+
+    super.addListener(listener);
+  }
+
+  @override
+  removeListener(VoidCallback listener) {
+    if (disposed) return;
+
+    super.addListener(listener);
+  }
+
+  @override
   void notifyListeners() {
     if (disposed) return;
     super.notifyListeners();

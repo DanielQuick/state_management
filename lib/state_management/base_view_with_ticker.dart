@@ -23,7 +23,7 @@ class _BaseViewWithTickerState<T extends BaseControllerWithTicker>
     return ChangeNotifierProvider(
       create: (context) => widget.controllerBuilder(context, this),
       builder: (context, child) {
-        final controller = Provider.of<T>(context, listen: false);
+        final controller = Provider.of<T>(context);
         return widget.builder(context, controller, child);
       },
     );

@@ -20,7 +20,7 @@ class _BaseViewState<T extends BaseController> extends State<BaseView<T>> {
     return ChangeNotifierProvider(
       create: (context) => widget.controllerBuilder(context),
       builder: (context, child) {
-        final controller = Provider.of<T>(context, listen: false);
+        final controller = Provider.of<T>(context);
         return widget.builder(context, controller, child);
       },
     );

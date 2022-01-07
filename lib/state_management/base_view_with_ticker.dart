@@ -18,21 +18,14 @@ class BaseViewWithTicker<T extends BaseControllerWithTicker>
 
 class _BaseViewWithTickerState<T extends BaseControllerWithTicker>
     extends State<BaseViewWithTicker<T>> with SingleTickerProviderStateMixin {
-  late T controller;
-
-  @override
-  void initState() {
-    controller = widget.controllerBuilder(context, this);
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<T?>(
-      create: (context) => controller,
-      child: Consumer<T>(
-        builder: widget.builder,
-      ),
+    return ChangeNotifierProvider(
+      create: (context) => widget.controllerBuilder(context, this),
+      builder: (context, child) {
+        final controller = Provider.of<T>(context, listen: false);
+        return widget.builder(context, controller, child);
+      },
     );
   }
 }

@@ -15,21 +15,14 @@ class BaseView<T extends BaseController> extends StatefulWidget {
 }
 
 class _BaseViewState<T extends BaseController> extends State<BaseView<T>> {
-  late T controller;
-
-  @override
-  void initState() {
-    controller = widget.controllerBuilder(context);
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<T>(
-      create: (context) => controller,
-      child: Consumer<T>(
-        builder: widget.builder,
-      ),
+    return ChangeNotifierProvider(
+      create: (context) => widget.controllerBuilder(context),
+      builder: (context, child) {
+        final controller = Provider.of<T>(context, listen: false);
+        return widget.builder(context, controller, child);
+      },
     );
   }
 }
